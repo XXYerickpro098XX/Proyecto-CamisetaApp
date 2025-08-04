@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Fondo Animado</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100vh;
+      background: linear-gradient(135deg, #a2d5c6, #c0f0f7);
+      position: relative;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: mover 20s linear infinite;
+    }
+
+    @keyframes mover {
+      0% {
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        transform: translateY(-100px) scale(1.2);
+      }
+      100% {
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Generación de múltiples círculos con distintos tamaños y posiciones */
+    .circle:nth-child(1) {
+      width: 100px;
+      height: 100px;
+      left: 10%;
+      top: 20%;
+      animation-duration: 25s;
+    }
+
+    .circle:nth-child(2) {
+      width: 80px;
+      height: 80px;
+      left: 70%;
+      top: 30%;
+      animation-duration: 18s;
+    }
+
+    .circle:nth-child(3) {
+      width: 120px;
+      height: 120px;
+      left: 40%;
+      top: 60%;
+      animation-duration: 22s;
+    }
+
+    .circle:nth-child(4) {
+      width: 60px;
+      height: 60px;
+      left: 85%;
+      top: 10%;
+      animation-duration: 20s;
+    }
+
+    .circle:nth-child(5) {
+      width: 90px;
+      height: 90px;
+      left: 25%;
+      top: 80%;
+      animation-duration: 30s;
+    }
+  </style>
+</head>
+<body>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+</body>
+</html>

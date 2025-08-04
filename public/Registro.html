@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #a2d5c6, #c0f0f7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .formulario {
+      background-color: #ffffffcc;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      padding: 10px;
+      border: 2px solid #a2d5c6;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #5cd3b4;
+      box-shadow: 0 0 5px #5cd3b4;
+    }
+
+    input[type="button"] {
+      background-color: #5cd3b4;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="button"]:hover {
+      background-color: #42bfa3;
+    }
+  </style>
+</head>
+<body>
+  <div class="formulario">
+    <input type="text" id="inputnombre" placeholder="Escriba el nombre">
+    <input type="email" id="inputemail" placeholder="Escriba el email">
+    <input type="password" id="inputpassword" placeholder="Escriba el password">
+    <input type="button" value="Registrar" onclick="registrar()">
+  </div>
+
+  <script>
+    async function registrar() {
+      const datos = {
+        nombre: document.getElementById("inputnombre").value,
+        email: document.getElementById("inputemail").value,
+        clave: document.getElementById("inputpassword").value
+      };
+
+      try {
+        const respuesta = await fetch('/api/usuarios', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(datos)
+        });
+
+        if (!respuesta.ok) {
+          const error = await respuesta.json();
+          throw new Error(error.error || 'Error en la solicitud');
+        }
+
+        const resultado = await respuesta.json();
+        console.log('Usuario creado con fetch:', resultado);
+        alert('¡Usuario registrado con éxito!');
+      } catch (error) {
+        console.error(error);
+        alert('Error: ' + error.message);
+      }
+    }
+  </script>
+</body>
+</html>

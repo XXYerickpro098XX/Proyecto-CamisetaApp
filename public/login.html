@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Iniciar Sesión</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #a2d5c6, #c0f0f7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .formulario {
+      background-color: #ffffffcc;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      padding: 10px;
+      border: 2px solid #a2d5c6;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      width: 17rem;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #5cd3b4;
+      box-shadow: 0 0 5px #5cd3b4;
+    }
+
+    button[type="submit"] {
+      background-color: #5cd3b4;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #42bfa3;
+    }
+
+    #mensaje {
+      text-align: center;
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="formulario">
+    <h2 style="text-align:center; margin:0;">Login</h2>
+    <form id="formLogin">
+      <input type="email" id="email" placeholder="Correo electrónico" required>
+      <input type="password" id="clave" placeholder="Contraseña" required>
+      <button type="submit">Iniciar sesión</button>
+    </form>
+    <p id="mensaje"></p>
+  </div>
+
+  <script>
+    document.getElementById('formLogin').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const datos = {
+        email: document.getElementById('email').value,
+        clave: document.getElementById('clave').value
+      };
+
+      try {
+        const respuesta = await fetch('/api/usuarios/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(datos)
+        });
+
+        const resultado = await respuesta.json();
+
+        if (!respuesta.ok) {
+          document.getElementById('mensaje').innerText = resultado.error || 'Credenciales inválidas';
+          return;
+        }
+
+        localStorage.setItem('token', resultado.token);
+        document.getElementById('mensaje').innerText = '¡Inicio de sesión exitoso!';
+
+        const token = localStorage.getItem('token');
+        location.href = `/camiseta?token=${encodeURIComponent(token)}`;
+      } catch (error) {
+        console.error('Error al iniciar sesión:', error);
+        document.getElementById('mensaje').innerText = 'Ocurrió un error en el servidor.';
+      }
+    });
+  </script>
+</body>
+</html>

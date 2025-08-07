@@ -23,6 +23,11 @@
       display: flex;
       flex-direction: column;
       gap: 15px;
+      text-align: center;
+    }
+
+    .formulario h2 {
+      margin: 0;
     }
 
     input[type="text"],
@@ -62,12 +67,14 @@
       text-align: center;
       color: red;
       margin-top: 10px;
+      font-weight: bold;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
   <div class="formulario">
-    <h2 style="text-align:center; margin:0;">Login</h2>
+    <h2>Login</h2>
     <form id="formLogin">
       <input type="email" id="email" placeholder="Correo electrónico" required>
       <input type="password" id="clave" placeholder="Contraseña" required>

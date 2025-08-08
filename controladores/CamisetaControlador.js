@@ -1,7 +1,7 @@
 const Camiseta = require('../modelos/CamisetaEsquema');
 const usuario = require('../modelos/UsuarioEsquema');
 
-exports.getCamisetas = async (req, res) => {
+exports.ObtenerCamisetas = async (req, res) => {
   try {
     const camisetas = await Camiseta.find();
     const camisetasConUsuario = await Promise.all(

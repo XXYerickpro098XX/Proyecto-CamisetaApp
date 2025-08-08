@@ -8,33 +8,44 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #a2d5c6, #c0f0f7);
+      background: linear-gradient(135deg, #a2d5c6, #c0f0f7);
       margin: 0;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      padding: 20px;
     }
 
     .camiseta-wrapper {
-      background-color: #ffffffcc;
+      background-color: rgba(255, 255, 255, 0.9);
       padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 25px;
+      max-width: 800px;
+      width: 100%;
     }
 
     h2 {
       margin: 0;
-      color: #333;
+      color: #2c3e50;
+      font-weight: 600;
     }
 
     .camiseta-container {
-      width: 350px;
-      height: 350px;
+      width: 300px;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f8f9fa;
+      border-radius: 15px;
+      box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.05);
+      padding: 15px;
     }
 
     svg {
@@ -44,26 +55,17 @@
     }
 
     #color-picker {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
       border: none;
-      padding: 0;
+      border-radius: 50%;
       cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+      transition: transform 0.2s ease;
     }
 
-    button {
-      background-color: #5cd3b4;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #42bfa3;
+    #color-picker:hover {
+      transform: scale(1.1);
     }
 
     .botones {
@@ -73,22 +75,52 @@
       flex-wrap: wrap;
     }
 
+    button {
+      background-color: #5cd3b4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #42bfa3;
+      transform: translateY(-2px);
+    }
+
     table.dataTable {
       width: 100% !important;
-      margin-top: 20px;
-      background-color: #ffffff;
-      border: 1px solid #d8b4fe;
+      margin-top: 10px;
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      border: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
     table.dataTable thead {
-      background-color: #f3e8ff;
-      color: #4b0082;
+      background-color: #5cd3b4;
+      color: white;
+    }
+
+    table.dataTable th, table.dataTable td {
+      text-align: center;
+      padding: 10px;
+    }
+
+    .miniatura {
+      max-width: 50px;
+      max-height: 50px;
     }
   </style>
 </head>
 <body>
   <div class="camiseta-wrapper">
     <h2>Diseña tu Camiseta</h2>
+
     <div class="camiseta-container">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="1 2 26 14" id="camiseta-svg">
         <path class="parte-camiseta" id="manga-izquierda" d="M 4 8 M 5 3 L 5 6 L 3 7 L 1 5" fill="#000000" />
@@ -98,13 +130,16 @@
         <path class="parte-camiseta" id="cuelloder" d="M 10 2 L 11 3 L 9 5 L 10 3 M 1 4" fill="#000000" />
       </svg>
     </div>
+
     <input type="color" id="color-picker" value="#ffffff" />
+
     <div class="botones">
       <button id="btn-guardar">Guardar Diseño</button>
       <button id="btn-modificar-real" style="display: none;">Modificar Diseño</button>
       <button id="btn-limpiar">Reiniciar Colores</button>
       <input type="hidden" id="camiseta-id">
     </div>
+
     <table id="tabla-camisetas" class="display">
       <thead>
         <tr>
@@ -117,6 +152,9 @@
       <tbody></tbody>
     </table>
   </div>
+</body>
+</html>
+
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
